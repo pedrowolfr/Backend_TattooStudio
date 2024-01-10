@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { Design } from "./Design";
-import { Appoinment } from "./Appoinment";
+import { Appointment } from "./Appointment";
 
 @Entity("artist")
 export class Artist extends BaseEntity {
@@ -38,6 +38,6 @@ export class Artist extends BaseEntity {
   @OneToMany(() => Design, (design) => design)
   design!: Design[];
 
-  @OneToMany(() => Appoinment, (appoinment) => appoinment.artist)
-  customerAppoinments!: Appoinment[];
+  @OneToMany(() => Appointment, (appointment) => appointment.artist)
+  customerAppoinments!: Appointment[];
 }

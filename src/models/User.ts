@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Role } from "./Role";
 import { Artist } from "./Artist";
-import { Appoinment } from "./Appoinment";
+import { Appointment } from "./Appointment";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -51,6 +51,6 @@ export class User extends BaseEntity {
   @JoinColumn({ name: "artist_id" })
   artist!: Artist;
 
-  @OneToMany(() => Appoinment, (appoinment) => appoinment.artist)
-  customerAppoinments!: Appoinment[];
+  @OneToMany(() => Appointment, (appointment) => appointment.artist)
+  customerAppoinments!: Appointment[];
 }
