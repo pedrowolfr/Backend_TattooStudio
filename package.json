@@ -1,6 +1,6 @@
 {
   "main": "dist/server.js",
-    "scripts": {
+  "scripts": {
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --files src/server.ts"
