@@ -13,7 +13,7 @@ export class Role extends BaseEntity {
   id!: number;
 
   @Column()
-  name!: string;
+  role_name!: string;
 
   @Column()
   created_at!: Date;
