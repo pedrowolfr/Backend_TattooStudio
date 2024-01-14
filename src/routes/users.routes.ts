@@ -1,5 +1,5 @@
 import express from "express";
-import { userController } from "../controllers/UsersController";
+import { UserController } from "../controllers/usersController";
 import { sampleMiddleware } from "../middlewares/sampleMiddleware";
 import { auth } from "../middlewares/auth";
 import { isAdmin } from "../middlewares/isAdmin";
@@ -9,10 +9,10 @@ import { isAdmin } from "../middlewares/isAdmin";
 const router = express.Router();
 const userController = new UserController();
 
-router.get("/", auth, isAdmin, userController.getAll);
+router.get("/", auth, isAdmin, userController.getUsers);
 router.get("/:id", userController.getById);
-router.post("/", userController.create);
-router.patch("/:id", userController.update);
-router.delete("/:id", userController.delete);
+router.post("/", userController.createUser);
+router.patch("/:id", userController.updateUser);
+router.delete("/:id", userController.deleteUser);
 
 export default router;
