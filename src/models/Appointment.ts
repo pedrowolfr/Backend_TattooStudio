@@ -24,7 +24,7 @@ export class Appointment extends BaseEntity {
   date!: string;
 
   @Column()
-  hour!: string;
+  time!: string;
 
   @Column()
   created_at!: Date;

@@ -29,9 +29,6 @@ export class User extends BaseEntity {
   last_name!: string;
 
   @Column()
-  portfolio!: string;
-
-  @Column()
   phone!: number;
 
   @Column()

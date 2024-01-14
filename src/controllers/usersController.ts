@@ -1,29 +1,51 @@
 import { Controller } from "./Controller";
 import { Request, Response } from "express";
 import { User } from "../models/User";
+import { AppDataSource } from "../database/data-source";
 
 
 export class UserController implements Controller {
     async getUsers(req: Request, res: Response): Promise<void | Response<any>> {
         try {
-          const users = await User.find();
+          const userRepository = AppDataSource.getRepository(User);
+          
+          let { page, skip } = req.query;
+
+         let currentPage = page ? +page : 1;
+         let itemsPerPage = skip ? +skip : 10;
+          
+          
+          const users = await userRepository.findAndCount({
+          skip: (currentPage - 1) * itemsPerPage,
+            take: itemsPerPage,
+            select: {
+               username: true,
+               email: true,
+               id: true,
+            },
+         });
           res.status(200).json(users);
         } catch (error) {
-          res.status(500).json({ error: "Error while getting users" });
+          res.status(500).json({ error: "Error al obtener usuarios" });
         }
       };
       
 async getById(req: Request, res: Response): Promise<void | Response<any>> {
   try {
-    const user = await User.findOneBy(req.params.id);
-    if (!user) return res.status(404).json({ error: "User not found" });
+    const id = +req.params.id;
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOneBy({
+      id: id,
+         });
+    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: "Error while getting user" });
+    res.status(500).json({ error: "Error al obtener usuarios" });
   }
 };
 
 async createUser(req: Request, res: Response): Promise<void | Response<any>> {
+  const userRepository = AppDataSource.getRepository(User);
     try {
       const newUser = await User.create(req.body);
       res.status(201).json(newUser);
