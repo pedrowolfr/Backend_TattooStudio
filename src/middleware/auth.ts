@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import jwt, { JwtPayload, decode } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { TokenData } from "../types/types";
 
 // -----------------------------------------------------------------------------
