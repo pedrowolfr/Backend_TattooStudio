@@ -8,10 +8,10 @@ import { isAdmin } from "../middleware/isAdmin";
 const router = express.Router();
 const userController = new UserController();
 
-router.get("/", auth, isAdmin, userController.getUsers);
+router.get("/", auth, isAdmin, userController.getAll);
 router.get("/:id", userController.getById);
-router.post("/", userController.createUser);
-router.patch("/:id", userController.updateUser);
-router.delete("/:id", userController.deleteUser);
+router.post("/", userController.create);
+router.patch("/:id", userController.update);
+router.delete("/:id", userController.delete);
 
 export default router;

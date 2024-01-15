@@ -6,11 +6,12 @@ export interface CreateUserRequestBody {
   password: string;
 }
 
-export interface CreateArtistRequestBody {
-  name: string;
-  portfolio: string;
+export interface CreateAppointmentRequestBody {
+  user_id: number;
+  artist_id: number;
+  date: string;
+  time: string;
 }
-
 export interface LoginUserRequestBody {
   email: string;
   password: string;

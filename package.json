@@ -1,10 +1,22 @@
 {
+  "name": "inkon",
+  "version": "1.0.0",
   "main": "dist/server.js",
+
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon --files src/server.ts"
+    "dev": "nodemon --files src/server.ts",
+    "db:seed": "ts-node src/database/seeders/DatabaseSeeder.ts",
+    "db:migrate": "npx typeorm-ts-node-commonjs migration:run -d ./src/database/data-source.ts",
+    "db:drop": "npx typeorm-ts-node-commonjs schema:drop -d ./src/database/data-source.ts",
+    "db:refresh": "npm run db:drop && npm run db:migrate"
+
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
     "bcrypt": "^5.1.1",

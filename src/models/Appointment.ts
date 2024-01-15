@@ -9,7 +9,7 @@ import {
 import { User } from "./User";
 import { Artist } from "./Artist";
 
-@Entity()
+@Entity("appointments")
 export class Appointment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -20,11 +20,11 @@ export class Appointment extends BaseEntity {
   @Column()
   artist_id!: number;
 
-  @Column()
-  date!: string;
-
-  @Column()
-  time!: string;
+  @Column({ type: "date" })
+  date!: Date;
+    
+  @Column({ type: "time" })
+  time!: Date;
 
   @Column()
   created_at!: Date;

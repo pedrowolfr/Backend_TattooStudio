@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { Artist } from "./Artist";
 
-@Entity()
+@Entity("designs")
 export class Design extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;

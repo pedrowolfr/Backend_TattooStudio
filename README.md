@@ -23,18 +23,12 @@
 </details>
 
 ## Objetivo
-Este proyecto requería una API funcional conectada a una base de datos con al menos una relación de uno a muchos y una relación de muchos a muchos.
+Este proyecto requería una API funcional conectada a una base de datos con algunas de las relaciones ya conocidas, ademas de un minimo de endpoints requeridos entorno a los usuarios y citas de los mismos. 
 
 ## Sobre el proyecto
-Decidí crear una aplicación web para ayudar a este estudio de tatuajes que recien comienza en el mercado, que les permitiría la gestión de citas de sus potenciales clientes con artistas de renombre en el mundo del tattoo. 
+Se solicita la creacion del backend de una aplicación web para ayudar a este estudio de tatuajes que recien comienza en el mercado, facilitando el registro de usuarios y que les permitiría la gestión de citas de sus potenciales clientes con artistas de renombre en el mundo del tattoo. 
 
-## Deploy 🚀
-<div align="center">
-    <a href="https://www.google.com"><strong>Url a producción </strong></a>🚀🚀🚀
-</div>
-
-## Stack
-Tecnologías utilizadas:
+## Tecnologías 🚀
 <div align="center">
 
 <img src= "https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"/>
@@ -49,6 +43,7 @@ Tecnologías utilizadas:
 
 
 ## Diagrama BD
+En el siguiente diagrama se refleja las relaciones que tendrán cada una de las tablas creadas, dando la posibilidad de asignar roles de user a los clientes, admin para tatuadores y super_admin para el encargado, con diferencia de privilegios en la base de datos para cada uno. 
 <div style="text-align: center;">
  <img src= "./assets/diagrama_bd.png" style="height: 600"/>
 </div>
@@ -62,7 +57,7 @@ Tecnologías utilizadas:
 6. ``` $ npm run dev ``` 
 7. ...
 
-## Endpoints
+## Endpoints 📍
 <details>
 <summary>Endpoints</summary>
 
@@ -90,16 +85,17 @@ Tecnologías utilizadas:
                 "password": "princes"
             }
         ```
-- RUTINAS
-    - RECUPERAR RUTINAS  
+- APPOINMENTS
+    - CREATE 
 
-            GET http://localhost:3000/api/rutina
+              POST http://localhost:3000/api/appointments/newAppointment
 
-    - ...
+    - UPDATE
+
+            
 </details>
 
 ## Futuras funcionalidades
-[ ] Permitir que el tatuador actualice las citas.
 [ ] Permitir que el tatuador actualice las citas.
 [ ] Permita que el tatuador cree citas para los clientes. 
 [ ] Permitir múltiples productos en una sola cita.
@@ -134,26 +130,18 @@ Para conseguir mi objetivo he recopilado información de:
 - https://typeorm.io/
 - https://orkhan.gitbook.io/typeorm/docs/migrations
 
-## Desarrollo:
-
-``` js
- const developer = "datata";
-
- console.log("Desarrollado por: " + datata);
-```  
-
 ## Agradecimientos:
 
-Agradezco a mis compañeros el tiempo dedicado a este proyecto:
+Este proyecto ha sido posible gracias al arduo trabajo de los profesores Fidel Gilart y Javier Rodríguez, quienes comparten sus conocimientos con estusiasmo y mucha dedicación, ademas a mis compañeros, por el apoyo incondicional y muy paciente.:
 
-- *Jose*  
-<a href="https://github.com/Dave86dev" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
+- **Gabriel Escudillo**  
+<a href="https://github.com/GabrielEscudillo" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
 
-- **David**  
-<a href="https://www.github.com/userGithub/" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" target="_blank"></a>
+- **Fidel Gilart**  
+<a href="https://github.com/fidelfsd" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" target="_blank"></a>
 
-- ***Mara***  
-<a href="https://www.github.com/userGithub/" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=green" target="_blank"></a> 
+- **Javier Rodriguez**  
+<a href="https://github.com/JavierRodriguez78" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=green" target="_blank"></a> 
 
 ## Autor
 
@@ -171,5 +159,3 @@ Agradezco a mis compañeros el tiempo dedicado a este proyecto:
 </a> 
 
 [<img src="./assets/top.png" width="60"  align="right"/>](#) 
-
-## Imagenes
