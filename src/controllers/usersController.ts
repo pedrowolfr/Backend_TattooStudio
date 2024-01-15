@@ -1,12 +1,11 @@
-import { Controller } from "./Controller";
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { AppDataSource } from "../database/data-source";
 
 // -----------------------------------------------------------------------------
 
-export class UserController implements Controller {
-  async getUsers(req: Request, res: Response): Promise<void | Response<any>> {
+export class UserController {
+  async getAll(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const userRepository = AppDataSource.getRepository(User);
 
@@ -46,7 +45,7 @@ export class UserController implements Controller {
     }
   }
 
-  async createUser(req: Request, res: Response): Promise<void | Response<any>> {
+  async create(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const data = req.body;
@@ -58,7 +57,7 @@ export class UserController implements Controller {
     }
   }
 
-  async updateUser(req: Request, res: Response): Promise<void | Response<any>> {
+  async update(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const id = +req.params.id;
@@ -73,7 +72,7 @@ export class UserController implements Controller {
     }
   }
 
-  async deleteUser(req: Request, res: Response): Promise<void | Response<any>> {
+  async delete(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const id = +req.params.id;
