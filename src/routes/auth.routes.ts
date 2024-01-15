@@ -1,6 +1,6 @@
 import express from "express";
 import userRoutes from "../routes/users.routes";
-import authRoutes from "../routes/auth.routes"
+import authRoutes from "../routes/auth.routes";
 import { AuthController } from "../controllers/AuthController";
 
 // -------------------------------------------------------------------
