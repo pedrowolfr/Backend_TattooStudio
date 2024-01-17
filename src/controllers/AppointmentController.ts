@@ -1,6 +1,7 @@
-import { AppDataSource } from "../database/data-source";
 import { Request, Response } from "express";
 import { Appointment } from "../models/Appointment";
+import { AppDataSource } from "../database/data-source";
+import { CreateAppointmentsRequestBody } from "../types/types";
 
 // -----------------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ export class AppointmentController {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const id = +req.params.id;
-      const appointment = await appointmentRepository.findOneBy({
+      const appointment = await appointmentRepository.findBy({
         id: id,
       });
 
@@ -53,7 +54,35 @@ export class AppointmentController {
     }
   }
 
-  async create(req: Request, res: Response): Promise<void | Response<any>> {
+  async getByArtist(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
+    try {
+      const id = +req.params.id;
+      const appointmentRepository = AppDataSource.getRepository(Appointment);
+      const appointments = await appointmentRepository.findBy({
+        artist_id: id,
+      });
+
+      if (!appointments) {
+        return res.status(404).json({
+          message: "Appointment not found",
+        });
+      }
+
+      res.status(200).json(appointments);
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while getting appointments",
+      });
+    }
+  }
+
+  async create(
+    req: Request<{}, {}, CreateAppointmentsRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const data = req.body;
@@ -65,7 +94,10 @@ export class AppointmentController {
     }
   }
 
-  async update(req: Request, res: Response): Promise<void | Response<any>> {
+  async updateAppointment(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const id = +req.params.id;
@@ -83,7 +115,10 @@ export class AppointmentController {
     }
   }
 
-  async delete(req: Request, res: Response): Promise<void | Response<any>> {
+  async deleteAppointment(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const id = +req.params.id;

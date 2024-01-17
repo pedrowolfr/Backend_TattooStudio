@@ -39,5 +39,5 @@ export class Artist extends BaseEntity {
   design!: Design[];
 
   @OneToMany(() => Appointment, (appointment) => appointment.artist)
-  customerAppoinments!: Appointment[];
+  userAppoinments!: Appointment[];
 }
