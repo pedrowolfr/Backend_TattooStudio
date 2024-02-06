@@ -54,10 +54,7 @@ export class AppointmentController {
     }
   }
 
-  async getByArtist(
-    req: Request,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async getByArtist(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const id = +req.params.id;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
@@ -79,10 +76,7 @@ export class AppointmentController {
     }
   }
 
-  async create(
-    req: Request<{}, {}, CreateAppointmentsRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async create(req: Request<{}, {}, CreateAppointmentsRequestBody>, res: Response): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const data = req.body;
@@ -94,10 +88,7 @@ export class AppointmentController {
     }
   }
 
-  async updateAppointment(
-    req: Request,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async updateAppointment(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const id = +req.params.id;
@@ -109,16 +100,13 @@ export class AppointmentController {
 
       if (!updateAppointment)
         return res.status(404).json({ error: "Cita no encontrada" });
-      res.status(200).json(updateAppointment);
+      res.status(202).json(updateAppointment);
     } catch (error) {
       res.status(500).json({ error: "Error al actualizar usuario" });
     }
   }
 
-  async deleteAppointment(
-    req: Request,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async deleteAppointment(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const id = +req.params.id;

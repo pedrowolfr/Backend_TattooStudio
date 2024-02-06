@@ -6,7 +6,7 @@ import authRouter from "./routes/appointments.routes";
 
 const router = express.Router();
 
-router.use("/api/users", userRoutes);
-router.use("/auth", authRouter);
+router.use("/api", userRoutes);
+router.use("/api/appointments/", authRouter);
 
 export default router;

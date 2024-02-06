@@ -13,9 +13,6 @@ import { Appointment } from "./Appointment";
 
 @Entity("users")
 export class User extends BaseEntity {
-  static findByIdAndUpdate(id: string, body: any, arg2: { new: boolean; }) {
-      throw new Error("Method not implemented.");
-  }
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -51,6 +48,6 @@ export class User extends BaseEntity {
   @JoinColumn({ name: "artist_id" })
   artist!: Artist;
 
-  @OneToMany(() => Appointment, (appointment) => appointment.artist)
+  @OneToMany(() => Appointment, (appointment) => appointment.user_id)
   customerAppoinments!: Appointment[];
 }

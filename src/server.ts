@@ -9,13 +9,13 @@ const port: number = 3000;
   try {
     await AppDataSource.initialize();
     console.log("================================");
-    console.log("🛢️  Data Source has been initialized!");
+    console.log("🛢️ ¡La fuente de datos ha sido inicializada!");
 
     app.listen(port, () => {
-      console.log("🚀 Server running on port ${port}");
+      console.log("🚀 Servidor ejecutándose en el puerto ${port}");
       console.log("================================");
     });
   } catch (error) {
-    console.error("⛔ Error during Data Source initialization", error);
+    console.error("⛔ Error durante la inicialización de la fuente de datos", error);
   }
 })();

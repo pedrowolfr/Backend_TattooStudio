@@ -15,10 +15,7 @@ import jwt from "jsonwebtoken";
 // -----------------------------------------------------------------------------
 
 export class UserController {
-  async register(
-    req: Request<{}, {}, CreateUserRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async register(req: Request<{}, {}, CreateUserRequestBody>, res: Response): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
     const { first_name, last_name, phone, email, password } = req.body;
     try {
@@ -29,10 +26,10 @@ export class UserController {
         phone,
         email,
         password: bcrypt.hashSync(password, 10),
-        // role: [UserRoles.User],
+        role: [UserRoles.User],
       });
-      await userRepository.save(newUser);
 
+      await userRepository.save(newUser);
       res.status(StatusCodes.CREATED).json({
         message: "Usuario creado con éxito",
       });
@@ -43,10 +40,7 @@ export class UserController {
     }
   }
 
-  async createArtist(
-    req: Request<{}, {}, CreateUserRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async createArtist(req: Request<{}, {}, CreateUserRequestBody>, res: Response): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
     const { first_name, last_name, phone, email, password } = req.body;
     try {
@@ -80,12 +74,9 @@ export class UserController {
     }
   }
 
-  async login(
-    req: Request<{}, {}, LoginUserRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async login(req: Request<{}, {}, LoginUserRequestBody>, res: Response): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
-    const { password, email } = req.body;
+    const { email, password } = req.body;
     try {
       // Validar existencia de email y contraseña
       if (!email || !password) {
@@ -148,19 +139,26 @@ export class UserController {
     }
   }
 
-  async getById(req: Request, res: Response): Promise<void | Response<any>> {
+  async getByid(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-      const userRepository = AppDataSource.getRepository(User);
       const id = +req.params.id;
+
+      const userRepository = AppDataSource.getRepository(User);
       const user = await userRepository.findOneBy({
         id: id,
       });
 
-      if (!user)
-        return res.status(404).json({ error: "Usuario no encontrado" });
+      if (!user) {
+        return res.status(404).json({
+          message: "Usuario no encontrado",
+        });
+      }
+
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).json({ error: "Error al obtener usuarios" });
+      res.status(500).json({
+        message: "Error al obtener usuario",
+      });
     }
   }
 
@@ -179,10 +177,7 @@ export class UserController {
     }
   }
 
-  async getAllArtists(
-    req: Request,
-    res: Response
-  ): Promise<void | Response<any>> {
+  async getAllArtists(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const ArtistRepository = AppDataSource.getRepository(Artist);
 

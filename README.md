@@ -51,9 +51,7 @@ En el siguiente diagrama se refleja las relaciones que tendrán cada una de las 
 2. ` $ npm install `
 3. Conectamos nuestro repositorio con la base de datos 
 4. ``` $ Ejecutamos las migraciones ``` 
-5. ``` $ Ejecutamos los seeders ``` 
-6. ``` $ npm run dev ``` 
-7. ...
+5. ``` $ npm run dev ``` 
 
 ## Endpoints 📍
 <details>
@@ -63,6 +61,7 @@ En el siguiente diagrama se refleja las relaciones que tendrán cada una de las 
     - REGISTER
 
             POST http://localhost:3000/api/register
+
         body:
         ``` js
             {
@@ -75,22 +74,93 @@ En el siguiente diagrama se refleja las relaciones que tendrán cada una de las 
     - LOGIN
 
             POST http://localhost:3000/api/login  
+
         body:
         ``` js
             {
-                "user": "David",
                 "email": "david@david.com",
                 "password": "princes"
             }
         ```
+
+    - PROFILE
+
+          GET http://localhost:3000/api/:id
+
+    - Insertamos el ID del user para que nos muestre todos los datos
+
+  - UPDATE
+
+          PATCH http://localhost:3000/api/:id
+
+    body:
+
+    ```js
+        {
+            "name": "NewUserNew  ",
+            "password": "NewPrinces1234@",
+            "phone_number": "55555559"
+        }
+    ```
+
+  - GET ALL ARTISTS
+
+          GET http://localhost:3000/api/artists/list
+
+</details>
+<details>
+<summary>APPOINTMENTS ENDPOINTS</summary>
+
 - APPOINMENTS
     - CREATE 
 
               POST http://localhost:3000/api/appointments/newAppointment
 
+    body:
+
+    ```js
+        {
+            "user_id": "1",
+            "date": "2024/03/28",
+            "time": "14:00"
+        }
+
+    ```
+
     - UPDATE
 
-            
+          PATCH http://localhost:3000/api/appointments/:id
+
+    body:
+
+    ```js
+        {
+            "user_id": "1",
+            "date": "2024-03-29",
+            "time": "14:00"
+        }
+    ```
+
+    - DELETE
+
+          DELETE http://localhost:3000/api/appointments/:id
+
+    body:
+
+    ```js
+        {
+           "id": "6"
+        }
+    ```
+
+    - GET ALL APPOINTMENTS BY CUSTOMER
+
+          GET http://localhost:3000/api/appointments/mysessions/:id
+
+    - GET ALL APPOINTMENTS BY ARTIST
+
+          GET http://localhost:3000/api/appointments/myappointments/:id
+
 </details>
 
 ## Futuras funcionalidades
@@ -134,6 +204,10 @@ Este proyecto ha sido posible gracias al arduo trabajo de los profesores Fidel G
 
 - **Gabriel Escudillo**  
 <a href="https://github.com/GabrielEscudillo" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
+
+- **Erika Orlando** <a href="https://github.com/AkireOrl"> 
+<img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" style="margin-right: 60px;" />
+</a>
 
 - **Fidel Gilart**  
 <a href="https://github.com/fidelfsd" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" target="_blank"></a>
