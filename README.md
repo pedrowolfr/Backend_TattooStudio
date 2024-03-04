@@ -205,8 +205,8 @@ Este proyecto ha sido posible gracias al arduo trabajo de los profesores Fidel G
 - **Gabriel Escudillo**  
 <a href="https://github.com/GabrielEscudillo" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
 
-- **Erika Orlando** 
-<a href="https://github.com/AkireOrl" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
+- **Erika Orlando**  
+<a href="https://github.com/AkireOrl" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a>
 
 - **Fidel Gilart**  
 <a href="https://github.com/fidelfsd" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" target="_blank"></a>
