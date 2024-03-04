@@ -15,7 +15,10 @@ import jwt from "jsonwebtoken";
 // -----------------------------------------------------------------------------
 
 export class UserController {
-  async register(req: Request<{}, {}, CreateUserRequestBody>, res: Response): Promise<void | Response<any>> {
+  async register(
+    req: Request<{}, {}, CreateUserRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
     const { first_name, last_name, phone, email, password } = req.body;
     try {
@@ -26,55 +29,63 @@ export class UserController {
         phone,
         email,
         password: bcrypt.hashSync(password, 10),
-        role: [UserRoles.User],
+        role: UserRoles.CUSTOMER,
       });
 
       await userRepository.save(newUser);
       res.status(StatusCodes.CREATED).json({
         message: "Usuario creado con éxito",
       });
-    } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Error al crear usuario",
+    } catch (error: any) {
+      console.error("Error al registrarse:", error);
+      res.status(500).json({
+        message: "Error al registrarse",
+        error: error.message,
       });
     }
   }
 
-  async createArtist(req: Request<{}, {}, CreateUserRequestBody>, res: Response): Promise<void | Response<any>> {
+  async createArtist(
+    req: Request<{}, {}, CreateUserRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
-    const { first_name, last_name, phone, email, password } = req.body;
+    const {  first_name, last_name, phone, email, password } = req.body;
     try {
       // Crear nuevo usuario
-      const newUser = userRepository.create({
+      const dataUser: User = {
         first_name,
         last_name,
         phone,
         email,
+       
         password: bcrypt.hashSync(password, 10),
-        role: [UserRoles.Admin],
-      });
-      await userRepository.save(newUser);
+        role: UserRoles.ARTIST,
+        created_at: new Date(),
+        updated_at: new Date(),
+        customerAppointments: [],
+      };
+      const newUser = await userRepository.save(dataUser);
 
-      if (newUser.role.includes(UserRoles.Admin)) {
-        const artistRepository = AppDataSource.getRepository(Artist);
-        const newArtist = artistRepository.create({
-          user_id: newUser.id,
-          portfolio: "https://",
-        });
-        await artistRepository.save(newArtist);
-      }
-
-      res.status(StatusCodes.CREATED).json({
-        message: "Usuario creado con éxito",
+      const artistRepository = AppDataSource.getRepository(Artist);
+      const newArtist = await artistRepository.save({
+        user: newUser,
+        portfolio: "https://",
       });
-    } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Error al crear usuario",
+      res.status(201).json(newArtist);
+    } catch (error: any) {
+      console.error("Error al crear artista:", error);
+      res.status(500).json({
+        message: "Error al crear artista",
+        error: error.message,
       });
     }
   }
 
-  async login(req: Request<{}, {}, LoginUserRequestBody>, res: Response): Promise<void | Response<any>> {
+  async login(
+    req: Request<{}, {}, LoginUserRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
     const { email, password } = req.body;
     try {
@@ -118,12 +129,14 @@ export class UserController {
       }
 
       // Generar token
+      const userRole = user.role.role_name;
+
       const tokenPayload: TokenData = {
         userId: user.id?.toString() as string,
-        userRoles: ["user", "admin", "super_admin"],
+        userRoles: userRole as string,
       };
 
-      const token = jwt.sign(tokenPayload, "1012", {
+      const token = jwt.sign(tokenPayload, "123", {
         expiresIn: "1h",
       });
 
@@ -139,7 +152,7 @@ export class UserController {
     }
   }
 
-  async getByid(req: Request, res: Response): Promise<void | Response<any>> {
+  async getProfile(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const id = +req.params.id;
 
@@ -164,44 +177,95 @@ export class UserController {
 
   async update(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-      const userRepository = AppDataSource.getRepository(User);
       const id = +req.params.id;
       const data = req.body;
-      const updateUser = await userRepository.update({ id: id }, data);
 
-      if (!updateUser)
-        return res.status(404).json({ error: "Usuario no encontrado" });
-      res.status(200).json(updateUser);
+      const userRepository = AppDataSource.getRepository(User);
+      await userRepository.update({ id: id }, data);
+
+      res.status(202).json({
+        message: "Usuario actualizado con éxito",
+      });
     } catch (error) {
-      res.status(400).json({ error: "Error al actualizar usuario" });
+      res.status(500).json({
+        message: "Error al actualizar usuario",
+      });
     }
   }
 
-  async getAllArtists(req: Request, res: Response): Promise<void | Response<any>> {
+  async getAllArtists(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
-      const ArtistRepository = AppDataSource.getRepository(Artist);
+      const artistRepository = AppDataSource.getRepository(Artist);
+
+      const allArtists = await artistRepository.find({
+        relations: ["user"],
+      });
+
+      const artistsWithDetails = allArtists.map((artist) => ({
+        id: artist.id,
+        name: artist.user.first_name,
+      }));
+
+      res.status(200).json(artistsWithDetails);
+    } catch (error) {
+      res.status(500).json({
+        message: "Error al obtener artistas",
+      });
+    }
+  }
+
+  async getAllUsers(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
+    try {
+      const UserRepository = AppDataSource.getRepository(User);
 
       let { page, skip } = req.query;
+
       let currentPage = page ? +page : 1;
       let itemsPerPage = skip ? +skip : 10;
 
-      const [allArtists, count] = await ArtistRepository.findAndCount({
+      const [allUsers, count] = await UserRepository.findAndCount({
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
         select: {
           id: true,
-          user_id: true,
+          first_name: true,
+          last_name: true,
+          phone: true,
+          email: true,
         },
       });
       res.status(200).json({
         count,
         skip: itemsPerPage,
         page: currentPage,
-        results: allArtists,
+        results: allUsers,
       });
     } catch (error) {
       res.status(500).json({
-        message: "Error al obtener artistas",
+        message: "Error al conseguir citas",
+      });
+    }
+  }
+
+  async deleteUser(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+      const id = +req.params.id;
+
+      const userRepository = AppDataSource.getRepository(User);
+      await userRepository.delete({ id: id });
+
+      res.status(200).json({
+        message: "Usuario eliminado exitosamente",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error al eliminar usuario",
       });
     }
   }

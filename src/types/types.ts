@@ -7,7 +7,8 @@ export interface CreateUserRequestBody {
 }
 export interface CreateAppointmentsRequestBody {
   user_id: number;
-  date: string;
+  artist_id: number;
+  date: Date;
   time: string;
 }
 export interface LoginUserRequestBody {
@@ -16,5 +17,9 @@ export interface LoginUserRequestBody {
 }
 export interface TokenData {
   userId: string;
-  userRoles: string[];
+  userRoles: string;
+}
+export interface CreateArtistRequestBody {
+  user_id: string;
+  portfolio: string;
 }

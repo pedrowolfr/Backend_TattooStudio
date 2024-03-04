@@ -6,19 +6,21 @@ import { TokenData } from "../types/types";
 // -----------------------------------------------------------------------------
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.headers.authorization) {
-    return res.json({
+  req.headers;
+
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
       message: "Requiere autorización",
     });
   }
 
-  const token = req.headers.authorization.split(" ")[1];
-
   try {
-    // Decodificar el token
-    const decoded = jwt.verify(token, "1012") as JwtPayload;
+    const decoded = jwt.verify(token, "123") as JwtPayload;
 
-    // Modificar el objeto Request con los datos del payload
+    console.log(decoded);
+
     const decodedPayload: TokenData = {
       userId: decoded.userId,
       userRoles: decoded.userRoles,

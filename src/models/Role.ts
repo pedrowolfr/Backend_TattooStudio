@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -8,7 +7,7 @@ import {
 import { User } from "./User";
 
 @Entity("roles")
-export class Role extends BaseEntity {
+export class Role {
   @PrimaryGeneratedColumn()
   id!: number;
 

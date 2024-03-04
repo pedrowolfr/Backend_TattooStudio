@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   OneToMany,
   OneToOne,
@@ -12,7 +11,7 @@ import { Design } from "./Design";
 import { Appointment } from "./Appointment";
 
 @Entity("artists")
-export class Artist extends BaseEntity {
+export class Artist {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -23,7 +22,7 @@ export class Artist extends BaseEntity {
   name!: string;
 
   @Column()
-  portfolio!: string;
+  portfolio?: string;
 
   @Column()
   created_at!: Date;
@@ -31,13 +30,13 @@ export class Artist extends BaseEntity {
   @Column()
   updated_at!: Date;
 
-  @OneToOne(() => User, (user) => user.artist)
-  @JoinColumn({ name: "user_id" })
-  users!: User[];
-
   @OneToMany(() => Design, (design) => design)
   design!: Design[];
 
   @OneToMany(() => Appointment, (appointment) => appointment.artist)
-  userAppoinments!: Appointment[];
+  customerAppointments!: Appointment[];
+
+  @OneToOne(() => User, (user) => user.artist)
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 }

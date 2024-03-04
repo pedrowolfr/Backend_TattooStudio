@@ -28,7 +28,7 @@ export class Design extends BaseEntity {
   @Column()
   updated_at!: Date;
 
-  @ManyToOne(() => Artist, (artist) => artist.users)
+  @ManyToOne(() => Artist, (artist) => artist.user)
   @JoinColumn({ name: "artist_id" })
   user!: Artist;
 }
