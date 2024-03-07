@@ -24,7 +24,7 @@ export class AppointmentController {
           artist_id: true,
           id: true,
         },
-          relations: ["artist", "artist.user", "user"]
+        relations: ["artist", "artist.user", "user"],
       };
 
       if (page && limit) {
@@ -39,12 +39,11 @@ export class AppointmentController {
       );
 
       const appointmentsWithArtistNames = allAppointments.map(appointment => ({
-        ...appointment,
-        artist_name: appointment.artist.user.first_name, 
-        user_name: appointment.user.first_name,
-        user_last_name: appointment.user.last_name,
-
-    }));
+          ...appointment,
+          artist_name: appointment.artist.user.first_name,
+          user_name: appointment.user.first_name,
+          user_last_name: appointment.user.last_name,
+        }));
 
       res.status(200).json({
         count,
@@ -64,11 +63,10 @@ export class AppointmentController {
       const id = +req.params.id;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const myAppointments = await appointmentRepository.find({
-        where: { user_id: id }, 
-        relations: ["artist", "artist.user"], 
-        select: ["id", "date", "time", "artist"], 
+        where: { user_id: id },
+        relations: ["artist", "artist.user"],
+        select: ["id", "date", "time", "artist"],
       });
-
 
       const appointmentsWithArtistName = myAppointments.map((appointment) => ({
         id: appointment.id,
@@ -93,31 +91,30 @@ export class AppointmentController {
     res: Response
   ): Promise<void | Response<any>> {
     try {
-      const userId = +req.params.id; 
+      const userId = +req.params.id;
       const userRepository = AppDataSource.getRepository(User);
-      
-    
+
       const user = await userRepository
         .createQueryBuilder("user")
         .leftJoinAndSelect("user.artist", "artist")
         .where("user.id = :userId", { userId })
         .getOne();
-  
 
       if (!user || !user.artist) {
-        return res.status(404).json({ message: "Usuario o artista asociado no encontrado" });
+        return res
+          .status(404)
+          .json({ message: "Usuario o artista asociado no encontrado" });
       }
-  
+
       const artistId = user.artist.id;
-  
+
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const myAppointments = await appointmentRepository.find({
-        where: { artist_id: artistId }, 
-        relations: ["user"], 
-        select: ["id", "date", "time", "artist_id"], 
+        where: { artist_id: artistId },
+        relations: ["user"],
+        select: ["id", "date", "time", "artist_id"],
       });
-  
-     
+
       const appointmentsWithUserName = myAppointments.map((appointment) => ({
         id: appointment.id,
         date: appointment.date,
@@ -130,7 +127,7 @@ export class AppointmentController {
           phone_number: appointment.user.phone,
         },
       }));
-  
+
       res.status(200).json(appointmentsWithUserName);
     } catch (error) {
       console.error(error);
@@ -139,8 +136,6 @@ export class AppointmentController {
       });
     }
   }
-  
-
 
   async create(
     req: Request<{}, {}, CreateAppointmentsRequestBody>,
@@ -150,7 +145,6 @@ export class AppointmentController {
       const data = req.body;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
 
-      
       const artistRepository = AppDataSource.getRepository(Artist);
       const artist = await artistRepository.findOne({
         where: { id: data.artist_id },

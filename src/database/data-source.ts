@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-// import { CreateRoles1704826648215 } from "./migrations/1704826648215-CreateRoles";
 
 // ----------------------------------------------------------------
 
@@ -17,4 +16,3 @@ export const AppDataSource = new DataSource({
   logging: false,
 });
 
-//console.log(`${__dirname}/migrations`);

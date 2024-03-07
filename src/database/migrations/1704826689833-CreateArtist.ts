@@ -18,11 +18,6 @@ export class CreateArtist1704826689833 implements MigrationInterface {
             type: "int",
           },
           {
-            name: "name",
-            type: "varchar",
-            length: "50",
-          },
-          {
             name: "portfolio",
             type: "varchar",
             length: "50",

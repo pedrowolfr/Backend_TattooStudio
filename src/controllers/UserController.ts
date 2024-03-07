@@ -50,7 +50,7 @@ export class UserController {
     res: Response
   ): Promise<void | Response<any>> {
     const userRepository = AppDataSource.getRepository(User);
-    const {  first_name, last_name, phone, email, password } = req.body;
+    const { first_name, last_name, phone, email, password } = req.body;
     try {
       // Crear nuevo usuario
       const dataUser: User = {
@@ -58,7 +58,6 @@ export class UserController {
         last_name,
         phone,
         email,
-       
         password: bcrypt.hashSync(password, 10),
         role: UserRoles.ARTIST,
         created_at: new Date(),
@@ -193,7 +192,7 @@ export class UserController {
     }
   }
 
-  async getAllArtists(
+  async allArtists(
     req: Request,
     res: Response
   ): Promise<void | Response<any>> {
@@ -206,7 +205,7 @@ export class UserController {
 
       const artistsWithDetails = allArtists.map((artist) => ({
         id: artist.id,
-        name: artist.user.first_name,
+        first_name: artist.user.first_name,
       }));
 
       res.status(200).json(artistsWithDetails);

@@ -5,7 +5,9 @@ import cors from "cors";
 //-----------------
 
 const app: Application = express();
-app.use(cors({ origin: true, methods: ["GET", "POST", "PATCH", "UPDATE", "DELETE"]}));
+app.use(
+  cors({ origin: true, methods: ["GET", "POST", "PATCH", "UPDATE", "DELETE"] })
+);
 app.use(express.json());
 
 app.use(router);
